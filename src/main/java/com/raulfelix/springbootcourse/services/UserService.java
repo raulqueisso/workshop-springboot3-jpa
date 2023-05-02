@@ -2,6 +2,7 @@ package com.raulfelix.springbootcourse.services;
 
 import com.raulfelix.springbootcourse.entities.User;
 import com.raulfelix.springbootcourse.repositories.UserRepository;
+import com.raulfelix.springbootcourse.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User obj) {
